@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import React from "react";
-
-const Home = () => (
+import { connect } from "react-redux";
+const Home = (props) => (
   <div>
-    <h1>首页</h1>
+    <h1>{props.title}</h1>
     <Link to="/list">跳转列表页</Link>
   </div>
 );
 
-export default Home;
+function mapStateTpProps(state) {
+  return { ...state.home };
+}
+
+export default connect(mapStateTpProps)(Home);

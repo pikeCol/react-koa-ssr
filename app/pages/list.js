@@ -1,12 +1,16 @@
 import React from "react";
-const list = ["react真好玩", "koa有点意思", "ssr更有意思"];
-
-const List = () => (
+import { connect } from "react-redux";
+const List = (props) => (
   <ul>
-    {list.map((item, i) => (
+    {props.list.map((item, i) => (
       <li key={i}>{item}</li>
     ))}
   </ul>
 );
+function mapStateTpProps(state) {
+  console.log(state);
 
-export default List;
+  return { list: state.list };
+}
+
+export default connect(mapStateTpProps)(List);

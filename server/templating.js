@@ -4,7 +4,8 @@ import { StaticRouter } from "react-router-dom";
 import RouterConfig from "../app/router";
 import React from "react";
 import path from "path";
-
+import { Provider } from "react-redux";
+import createStore from "../app/redux/store/create";
 // 匹配模板中的{{}}
 function templating(props) {
   const template = fs.readFileSync(
@@ -16,14 +17,18 @@ function templating(props) {
 
 export default function (ctx, next) {
   try {
-    ctx.render = () => {
+    ctx.render = (data = {}) => {
+      const store = createStore(data);
       const html = renderToString(
-        <StaticRouter location={ctx.url}>
-          <RouterConfig />
-        </StaticRouter>
+        <Provider store={store}>
+          <StaticRouter location={ctx.url}>
+            <RouterConfig />
+          </StaticRouter>
+        </Provider>
       );
       const body = templating({
         html,
+        store: JSON.stringify(data, null, 4),
       });
       ctx.body = body;
     };

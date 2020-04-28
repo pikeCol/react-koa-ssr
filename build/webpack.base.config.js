@@ -20,6 +20,24 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.html$/,
+        include: resolve("app"),
+        loader: "html-loader",
+      },
+      {
+        test: /\.less/,
+        include: resolve("app"),
+        use: ["style-loader", "css-loader", "less-loader"],
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: `url-loader?limit=1000`,
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: `file-loader`,
+      },
     ],
     resolve: {
       // 设置路径别名
